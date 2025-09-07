@@ -41,7 +41,7 @@ const hats = [
 	},
 ];
 
-export default function Page1() {
+export default function Page1({ goNext }) {
 	const [selectedHat, setSelectedHat] = useState(null);
 	const activeHat = hats.find((h) => h.id === selectedHat);
 
@@ -69,10 +69,10 @@ export default function Page1() {
 
 	return (
 		<div className="flex gap-[7.5vw] items-center justify-center min-h-[90vh] w-[85vw] border-green-300/0 border-2 mx-auto">
-			<motion.button
+			<motion.div
 				initial={{ opacity: 0, y: 10 }}
 				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.3, delay: 5 }}
+				transition={{ duration: 0.3, delay: 5.75 }}
 				className="absolute cursor-pointer bottom-[13.5vh] right-[6vw] flex items-center justify-center  w-[10vw] h-[5vh]"
 			>
 				<img
@@ -80,24 +80,27 @@ export default function Page1() {
 					className="w-[10vw] h-[5vh] absolute top-0 left-0 z-0 object-cover"
 					alt=""
 				/>
-				<span className="z-10 text-[2.25vh] flex items-center justify-center w-full h-full handlee font-semibold tracking-[1px]">
+				<button
+					onClick={goNext}
+					className="z-10 text-[2.25vh] flex items-center justify-center w-full h-full handlee font-semibold tracking-[1px] cursor-pointer"
+				>
 					Continue
-				</span>
-			</motion.button>
+				</button>
+			</motion.div>
 
 			<div className="flex flex-col border-2 border-amber-300/0 max-w-[32.5vw]">
 				<motion.h2
 					className="text-[4vh] handlee font-extrabold"
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.3, delay: 0.3 }}
+					transition={{ duration: 0.3, delay: 0.75 }}
 				>
 					A good worker should be able to wear many hats...
 				</motion.h2>
 				<motion.p
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.3, delay: 0.5 }}
+					transition={{ duration: 0.3, delay: 1 }}
 					className="mb-[13vh] handlee font-medium mt-[1.5vh] text-[3vh]"
 				>
 					As a worker you will often need to adapt to different roles and
@@ -144,7 +147,7 @@ export default function Page1() {
 				<motion.h2
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.3, delay: 1 }}
+					transition={{ duration: 0.3, delay: 1.25 }}
 					className="text-[3vh] text-center w-[70%] mx-auto handlee transition"
 				>
 					Click on different hats to see what I can do!
@@ -152,7 +155,7 @@ export default function Page1() {
 				<motion.div
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.3, delay: 1.25 }}
+					transition={{ duration: 0.3, delay: 1.5 }}
 					className="grid grid-cols-3 gap-x-[1.5vw] w-fit gap-y-[1.75vh] mx-auto mt-8 transition"
 				>
 					{hats.map((hat) => (

@@ -4,10 +4,11 @@ import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Page2 = () => {
+const Page2 = ({ goNext }) => {
 	const [showFix, setShowFix] = useState(false);
 	const [feedback, setFeedback] = useState("");
 	const [mood, setMood] = useState("confused");
+	const [viewMode, setViewMode] = useState("code");
 
 	const codeString = `<html lang="en">
   <body>
@@ -55,22 +56,26 @@ const Page2 = () => {
 		<>
 			{/* Continue button (only shows when bug is fixed) */}
 			{showFix && (
-				<motion.button
+				<motion.div
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.3, delay: 0.5 }}
-					className="absolute cursor-pointer bottom-[13.5vh] right-[6vw] flex items-center justify-center  w-[10vw] h-[5vh]"
+					className="absolute cursor-pointer bottom-[13.5vh] right-[6vw] flex items-center justify-center w-[10vw] h-[5vh]"
 				>
 					<img
 						src="/imgs/frame1.png"
 						className="w-[10vw] h-[5vh] absolute top-0 left-0 z-0 object-cover"
 						alt=""
 					/>
-					<span className="z-10 text-[2.25vh] flex items-center justify-center w-full h-full handlee font-semibold tracking-[1px]">
+					<button
+						onClick={goNext}
+						className="z-10 text-[2.25vh] flex items-center justify-center w-full h-full handlee font-semibold tracking-[1px] cursor-pointer"
+					>
 						Continue
-					</span>
-				</motion.button>
+					</button>
+				</motion.div>
 			)}
+
 			<div className="flex gap-[2vw] items-center justify-center min-h-[90vh] w-[85vw] mx-auto relative">
 				<div className="flex flex-col max-w-[30vw]">
 					<motion.h2
@@ -115,19 +120,69 @@ const Page2 = () => {
 				</div>
 
 				<div className="w-[45vw] pb-[3vh] flex flex-col items-center">
-					<SyntaxHighlighter
-						language="html"
-						style={dracula}
-						showLineNumbers
-						wrapLines
-						customStyle={{
-							borderRadius: "12px",
-							padding: "16px",
-							fontSize: "2vh",
-						}}
-					>
-						{showFix ? fixedCodeString : codeString}
-					</SyntaxHighlighter>
+					{/* Toggle buttons - only visible once bug is fixed */}
+					{showFix && (
+						<div className="flex mb-[3vh]">
+							<button
+								onClick={() => setViewMode("code")}
+								className={`px-[1.25vw] py-[0.75vh] rounded-l-[1vh] border-[1px] cursor-pointer transition ${
+									viewMode === "code"
+										? "bg-neutral-200 text-black border-neutral-400"
+										: "bg-neutral-50 text-black border-neutral-200"
+								}`}
+							>
+								Code
+							</button>
+							<button
+								onClick={() => setViewMode("view")}
+								className={`px-[1.25vw] py-[0.75vh] rounded-r-[1vh] border-[1px] cursor-pointer transition ${
+									viewMode === "view"
+										? "bg-neutral-200 text-black border-neutral-400"
+										: "bg-neutral-50 text-black border-neutral-200"
+								}`}
+							>
+								View
+							</button>
+						</div>
+					)}
+
+					{/* Code or View display */}
+					{viewMode === "code" ? (
+						<SyntaxHighlighter
+							language="html"
+							style={dracula}
+							showLineNumbers
+							wrapLines
+							customStyle={{
+								borderRadius: "12px",
+								padding: "16px",
+								fontSize: "2vh",
+							}}
+							className="w-[40vw] h-[35vh] rounded-xl"
+						>
+							{showFix ? fixedCodeString : codeString}
+						</SyntaxHighlighter>
+					) : (
+						<div className="w-[40vw] h-[35vh] px-[2vw] py-[2vh] border-[1px] border-neutral-400 rounded-xl bg-white">
+							<h1 className="text-[3vh] handlee font-extrabold">
+								My name is Yevheniia Simaka
+							</h1>
+							<h2 className="text-[2.75vh] handlee mb-[1vh]">
+								Facts about me:
+							</h2>
+							<ul className="list-disc ml-6">
+								<li className="handlee text-[2.25vh] font-medium">
+									I use TypeScript and JavaScript to code
+								</li>
+								<li className="handlee text-[2.25vh] font-medium">
+									I do frontend and sometimes fullstack
+								</li>
+								<li className="handlee text-[2.25vh] font-medium">
+									I won 10+ hackathons
+								</li>
+							</ul>
+						</div>
+					)}
 
 					<div className="flex flex-col gap-4 mt-6 w-full px-4 items-center">
 						<div className="flex gap-4 flex-wrap justify-center">
